@@ -21,17 +21,15 @@ actor {
 //clear_counter sets the value of counter to 0.
 
   stable var counter = 0;
-  // Get the value of the counter(this is to visualize the counter data after each function call)
-  public query func get() : async Nat {
+  // Increment the value of the counter by n.
+    public func increment_counter(n : Nat) : async Nat {
+     counter := counter + n;
     return counter;
   };
-  // Increment the value of the counter.
-  public func increment_counter() : async () {
-    counter += 1;
-  };
   // Set the value of the counter to 0.
-  public func clear_counter() : async(){
-    counter := 0
+    public func clear_counter() : async Nat{
+     counter := 0;
+     return counter;
   };
 //Challenge 5 : Write a function divide that takes two natural numbers n and m and returns a boolean indicating if m divides n.
   public func divide( n: Nat, m: Nat): async Bool{

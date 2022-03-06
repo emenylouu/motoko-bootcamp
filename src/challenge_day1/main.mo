@@ -14,7 +14,7 @@ actor {
 //Challenge 3 : Write a function days_to_second that takes a number of days n and returns the number of seconds.
   public func days_to_second(day : Int) : async Int {
       var sec = day * 24 * 3600;
-return (sec );
+      return (sec );
     };
 //Challenge 4 : Write two functions increment_counter & clear_counter .
 //increment_counter returns the incremented value of counter by n.

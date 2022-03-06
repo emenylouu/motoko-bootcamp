@@ -33,7 +33,7 @@ return (sec );
   public func clear_counter() : async(){
     counter := 0
   };
-//Challenge 5 : Write a function divide that takes two natural numbers n and m and returns a boolean indicating if y divides x.
+//Challenge 5 : Write a function divide that takes two natural numbers n and m and returns a boolean indicating if m divides n.
   public func divide( n: Nat, m: Nat): async Bool{
     if(m != 0){
       if(n%m == 0)

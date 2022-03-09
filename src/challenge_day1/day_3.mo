@@ -76,13 +76,11 @@ case(?x){x};
     };
 // challenge 10
       private func contains<A> (array:[A], a : A, f : (A,A)-> Bool) : Bool{
-        for ( i : A in array.vals()){
-            if (a == i)
-           { return true;};
-        };          
-         return false;
-
-    };
-
-
+        while ( i < array.vals()){
+        if (f(array[i],a)){
+        return true
+        };
+        i +=1;
+        };
+        return false;
 };

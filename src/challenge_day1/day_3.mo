@@ -32,14 +32,12 @@ public func seven(array : [Nat]) : async Text {
 };
 
 // challenge 4
-public func nat_opt_to_nat(n : ?Nat,m : Nat) : async Text {
-switch (n){
-  case(?0)  {
-        return (Nat.toText(m));
+public func nat_opt_to_nat(n : ?Nat,m : Nat) : async ?Nat {
+
+    if( n == null)
+   { return (m);
       };
-      case (?x){
-        return (Nat.toText(x));
-      };
+     return n ;
 };
 };
 // challenge 5 

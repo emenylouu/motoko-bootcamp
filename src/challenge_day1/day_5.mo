@@ -13,12 +13,12 @@ import Cycles "mo:base/ExperimentalCycles";
 import Float "mo:base/Float";
 import Prim "mo:prim";
 actor{
-    // challenge 1
+// challenge 1
     public shared(msg) func is_anonymous() : async Bool {
         if(Principal.isAnonymous(msg.caller)){return true};
         return false;
     };
-    // challnege 2
+ // challnege 2
    let favoriteNumber = HashMap.HashMap<Principal, Nat>(0, Principal.equal, Principal.hash);
 
 // challenge 3
@@ -31,7 +31,6 @@ public shared({caller}) func get_favorite_number() : async ?Nat {
 };
 
 // challenge 4
-
  public shared(msg) func add_favorite_number2(n: Nat) : async Text {
         if (favoriteNumber.get(msg.caller) != null) {
             return "You've already registered your number"
@@ -54,5 +53,33 @@ public shared({caller}) func delete_favorite_number(): async Text {
  public func deposit_cycles() : async Nat {
         let received = Cycles.accept(Cycles.available());
         return received;
+    };
+
+// Challenge 7
+     public shared(msg) func withdraw_cycles(amount : Nat) : async () {
+        var savings : Nat = 0;
+        assert (msg.caller == msg.caller);
+        assert (amount <= savings);
+        Cycles.add(amount);
+        let refund = Cycles.refunded();
+        savings -= amount - refund;
+    };
+
+// Challenge 8
+  
+    public func increment_counter(n : Nat) : async () {
+     var versionNumber : Nat = 0;
+     var counter : Nat = 0;
+        versionNumber += 1;
+        counter += n;
+    };
+
+// challenge 10
+    stable var version_number : Nat = 0;
+    system func postupgrade() {
+        version_number += 1;
+    };
+    public func get_current_version() : async Nat {
+        return version_number; 
     };
 };

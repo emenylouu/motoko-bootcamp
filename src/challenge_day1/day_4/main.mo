@@ -33,7 +33,7 @@ public type meme = Custom.Meme;
     animal_list :=  List.push<Animal>(a, animal_list);
   };
   public func get_animals() : async [Animal]{
-      return List. toArray<Animal>(animal_list);
+      return List.toArray<Animal>(animal_list);
   };
 
   // challenge 7

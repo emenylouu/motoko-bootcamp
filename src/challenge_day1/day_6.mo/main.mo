@@ -9,6 +9,14 @@ import Cycles "mo:base/ExperimentalCycles";
 import List "mo:base/List";
 import Text "mo:base/Text";
 import Option "mo:base/Option";
+import HeaderField "HeaderField";
+import Request "Request";
+import Response "Response";
+StreamingStrategy
+StreamingCallback
+StreamingCallbackToken 
+StreamingCallbackResponse
+
 
 // challenge 1
 actor class EmSTDR22 (){
@@ -40,11 +48,53 @@ else{
 };
 
 // challenge 4
-// challenge 6
-// challenge 7
-// challenge 8
-// challnege 9
-// challnege 10
+    let price : Nat = 100_000;
+    public shared ({caller}) func transfer(to : Principal, tokenIndex : Nat) : async Result.Result<Text, MintingErrors> {
+        if(Principal.isAnonymous(caller)) {
+            return #err(#Anonymous);
+        } else {
+            let cycles = Cycles.available();
+            if(cycles < price) {
+                return #err(#Balance);
+            };            
+        };
+        let r = registry.replace(tokenIndex, to);
+        return #ok("New Principal owner : " # Principal.toText(to));
+    };
+    
 
+    // Challenge 5
+    public type List<TokenIndex> = ?(TokenIndex, List<TokenIndex>);
+
+    public shared ({caller}) func balance() : async List<TokenIndex> {
+        var caller_token_idxs = List.nil<TokenIndex>();
+        for ((token_idx, principal) in registry.entries()) {
+            if (Principal.equal(caller, principal)) {
+                caller_token_idxs := List.push<TokenIndex>(token_idx, caller_token_idxs);
+            };
+        };
+        return caller_token_idxs;
+    };
+
+    // Challenge 6
+    public query func http_request(request : HTTP.Request) : async HTTP.Response {
+        var number_of_nft_minted_msg : Text = "nft minted : " # Nat.toText(nextTokenIndex);
+        var principal_of_latest_minter_msg : Text = "principal : " # Principal.toText(latest_minter);
+        let response = {
+            body = Text.encodeUtf8(number_of_nft_minted_msg # " / " # principal_of_latest_minter_msg);
+            headers = [("Content-Type", "text/html; charset=UTF-8")];
+            status_code = 200 : Nat16;
+            streaming_strategy = null;
+        };
+        return(response);
+    };
+
+    // Challenge 7
+    system func preupgrade() {
+        entries := Iter.toArray(registry.entries());
+    };
+    system func postupgrade() {
+        entries := [];
+    };
 
 }; 
